@@ -10,8 +10,8 @@
 template <typename T>
 ArrayClass<T>::ArrayClass()
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+  arr = new T [_capacity];
+  
 }
 
 // parameterized constructor
