@@ -4,14 +4,15 @@
 // description: implementation of a dynamic array class for CPSC 221 PA2
 
 #ifdef _ARRAYCLASS_H_
-
+using namespace std;
 // default constructor
 // Creates an empty ArrayClass with DEFAULTCAPACITY
 template <typename T>
 ArrayClass<T>::ArrayClass()
 {
+	_capacity=DEFAULTCAPACITY;
   arr = new T [_capacity];
-  
+  _size=0;
 }
 
 // parameterized constructor
@@ -19,8 +20,9 @@ ArrayClass<T>::ArrayClass()
 template <typename T>
 ArrayClass<T>::ArrayClass(unsigned int n)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	_capacity = n;
+arr = new T [_capacity];
+              _size = 0;
 }
 
 // copy constructor
@@ -28,25 +30,26 @@ ArrayClass<T>::ArrayClass(unsigned int n)
 template <typename T>
 ArrayClass<T>::ArrayClass(const ArrayClass& ac)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+          copyArray(ac);
 }
 
 // destructor
 template <typename T>
 ArrayClass<T>::~ArrayClass()
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+delete [] arr;
 }
 
 // overloaded assignment operator
 template <typename T>
 ArrayClass<T>& ArrayClass<T>::operator=(const ArrayClass& ac)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  return *this;
+	if(this!=&ac){
+  		delete[] arr;
+  		arr = NULL;
+  		copyArray(ac);
+  		return *this;
+  	}
 }
 
 ////////////////////////
@@ -57,18 +60,14 @@ ArrayClass<T>& ArrayClass<T>::operator=(const ArrayClass& ac)
 template <typename T>
 unsigned int ArrayClass<T>::size() const
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  return 0;
+  return _size;
 }
 
 // Returns the maximum capacity of the array
 template <typename T>
 unsigned int ArrayClass<T>::capacity() const
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  return 0;
+  return _capacity;
 }
 
 // Resizes the array
@@ -77,8 +76,27 @@ unsigned int ArrayClass<T>::capacity() const
 template <typename T>
 void ArrayClass<T>::resize(unsigned int n)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	//ArrayClass<T>* ac;
+
+	T* ac = new T[n];
+	if(n<_size&&n>=1){
+		//ac = new ArrayClass<T>(n);
+		//ac->_size = n;
+		_capacity = n;
+		_size = n;
+		for(unsigned int i=0; i<n;i++){
+			ac[i] = arr[i];
+		}
+	}else{
+		//ac = new ArrayClass<T>(n);
+		//ac->_size = _size;
+		_capacity = n;
+		for(unsigned int i=0; i<_size;i++){
+			ac[i] = arr[i];
+		}
+	}
+	arr = ac;
+	ac = NULL;
 }
 
 // Check if array is empty
@@ -86,9 +104,7 @@ void ArrayClass<T>::resize(unsigned int n)
 template <typename T>
 bool ArrayClass<T>::empty() const
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  return true;
+  return (_size==0);
 }
 
 // Resizes the array to fit exactly as many items
@@ -96,8 +112,7 @@ bool ArrayClass<T>::empty() const
 template <typename T>
 void ArrayClass<T>::shrinkToFit()
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	resize(_size);
 }
 
 //////////////////////////////
@@ -105,16 +120,21 @@ void ArrayClass<T>::shrinkToFit()
 //////////////////////////////
 
 // Returns a reference to the element at position i
-//   in the array.
+//   in the array. 
 // Throws an out_of_range exception if i is outside
 //   the bounds of valid elements
 template <typename T>
 T& ArrayClass<T>::operator[](unsigned int i)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  T stub;
-  return stub;
+	//
+ if( i>_size-1|| i<0||empty()){
+ 	throw std::out_of_range ("the index is out of range");
+ }
+  //T t;
+ // t = arr[i];
+ //T* stub = &arr[i];
+  // return *stub;
+ return arr[i];
 }
 
 // Returns a reference to the element at position i
@@ -124,10 +144,12 @@ T& ArrayClass<T>::operator[](unsigned int i)
 template <typename T>
 T& ArrayClass<T>::at(unsigned int i)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  T stub;
-  return stub;
+ if(i>_size-1|| i<0||empty() ){
+ 	throw std::out_of_range ("the index is out of range");
+ }
+  //T stub;
+  //stub = arr[i];
+  return  arr[i];
 }
 
 // Returns a reference to the first element in the array
@@ -135,10 +157,12 @@ T& ArrayClass<T>::at(unsigned int i)
 template <typename T>
 T& ArrayClass<T>::front()
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  T stub;
-  return stub;
+	if(_size<=0){
+		throw std::out_of_range ("the array is empty");
+	}
+ // T stub;
+ // stub = arr[0];
+  return arr[0];
 }
 
 // Returns a reference to the last element in the array
@@ -146,10 +170,12 @@ T& ArrayClass<T>::front()
 template <typename T>
 T& ArrayClass<T>::back()
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
-  T stub;
-  return stub;
+	if(_size<=0){
+		throw std::out_of_range ("the array is empty");
+	}
+  //T stub;
+ // stub = arr[_size-1];
+  return arr[_size-1];
 }
 
 //////////////////////
@@ -163,8 +189,11 @@ T& ArrayClass<T>::back()
 template <typename T>
 void ArrayClass<T>::pushBack(const T& item)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+ if(_size>=_capacity){
+ 	expandArray();
+ }
+ arr[_size] = item;
+ _size++;
 }
 
 // Removes the last stored element in the array,
@@ -173,8 +202,10 @@ void ArrayClass<T>::pushBack(const T& item)
 template <typename T>
 void ArrayClass<T>::popBack()
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	if(!empty()){
+//	arr[_size-1]==NULL;
+		_size--;
+	}
 }
 
 // Inserts an element before the element at specified position
@@ -185,8 +216,32 @@ void ArrayClass<T>::popBack()
 template <typename T>
 void ArrayClass<T>::insert(unsigned int position, const T& item)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	if(position>_size){
+		throw std::out_of_range ("the index is out of range");
+	}
+	if(_size==_capacity)expandArray();
+
+           T* newArray = new T[_size + 1];
+  for (int i=0; i<=_size; ++i)
+  {
+    if (i < position)
+    {
+       newArray[i] = arr[i];
+    }
+  
+    if (i == position)
+    {
+      newArray[i] = item;
+    }
+ 
+    if (i > position)
+    {
+      newArray[i] = arr[i-1];
+    }
+  }
+   arr= newArray;
+   _size++;
+   newArray =NULL;
 }
 
 // Removes an element from the array at specified position.
@@ -195,8 +250,18 @@ void ArrayClass<T>::insert(unsigned int position, const T& item)
 template <typename T>
 void ArrayClass<T>::erase(unsigned int position)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	if(position>=_size){
+		throw std::out_of_range ("the index is out of range");
+	}
+	 if(position==_size-1) {
+		popBack();
+	}else{
+		for(int i=position; i<_size; ++i){
+			arr[i]=arr[i+1];
+		}
+		_size--;
+	}
+
 }
 
 // Reallocates stored items into a new array of the same size,
@@ -207,8 +272,23 @@ void ArrayClass<T>::erase(unsigned int position)
 template <typename T>
 void ArrayClass<T>::startFrom(unsigned int position)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	if(position==0|| position>=_size) return;
+	 T* newArray = new T[_size ];
+	     int j =0;
+    for(unsigned i =0;i<_size;++i){
+    	//newArray[i] = arr[position];
+    	if(position==_size){
+    		
+    		newArray[i]=arr[j];
+    		j++;
+
+    	}else{
+    		newArray[i] = arr[position];
+    		position++;
+    	}
+    }
+    arr = newArray;
+    newArray = NULL;
 }
 
 //////////////////////
@@ -219,16 +299,25 @@ void ArrayClass<T>::startFrom(unsigned int position)
 template <typename T>
 void ArrayClass<T>::copyArray(const ArrayClass& ac)
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	arr= new T [ ac._capacity];
+  for (int i = 0; i < ac.size(); ++i)
+          {
+          	arr [i] = ac.arr [i];
+          }
+          _size = ac._size;
+          _capacity = ac._capacity;
 }
 
 // helper method for expanding array
 template <typename T>
 void ArrayClass<T>::expandArray()
 {
-  // The following is stub code only.
-  // Please replace with your own implementation
+	_capacity= _capacity*EXPANSIONFACTOR;
+	T* newArray = new T[_capacity];
+	for(int i=0; i<size();i++){
+		newArray[i] = arr[i];
+	}
+	arr = newArray;
 }
 
 #endif

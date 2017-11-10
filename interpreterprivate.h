@@ -20,5 +20,8 @@ return false;
 }
 
 */
+Queue<std::string> getTube(){
+	return tube;
+}
 
 #endif

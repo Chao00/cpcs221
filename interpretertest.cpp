@@ -28,7 +28,7 @@ int main()
 
   // Windows-specific, remove before distribution
 #ifdef _WIN32
-  system("pause");
+  //system("pause");
 #endif
   return 0;
 }
@@ -46,13 +46,65 @@ void runScriptedTest()
   intr.load("2 RQ");
   intr.load("7 + 30 -5");
   intr.load("/ PRINT");
+
+
   cout << "Program loaded." << endl;
   string output;
-  while (intr.hasMoreInstructions())
+    cout << "after loaded." << endl;
+    output = intr.run();
+      cout << "run all finish" << endl;
+      cout << output << endl;
+
+intr.load("3 2 +");
+intr.load("7 RQ -3 PRINT");
+  cout << "Program  22222 loaded." << endl;
+  string output2;
+    cout << "after 2 loaded." << endl;
+     while (intr.hasMoreInstructions())
   {
-    output = intr.next();
-    cout << output << endl;
-  }
+      cout << "start while loop" << endl;
+    output2 = intr.next();
+    cout << "after next" << endl;
+    cout << output2 << endl;
+    cout << "after assign" << endl;
+}
+    //output2 = intr.run();
+      // cout << "run 2 all finish" << endl;
+      // cout << output2 << endl;
+
+//   while (intr.hasMoreInstructions())
+//   {
+//       cout << "start while loop" << endl;
+//     output = intr.next();
+//     cout << "after next" << endl;
+//     cout << output << endl;
+//     cout << "after assign" << endl;
+// }
+    //   cout << "start again" << endl;
+    // output = intr.next();
+    // cout << "after next" << endl;
+    // cout << output << endl;
+    // cout << "after assign" << endl;
+
+    //       cout << "start again" << endl;
+    // output = intr.next();
+    // cout << "after next" << endl;
+    // cout << output << endl;
+    // cout << "after assign" << endl;
+
+    //       cout << "start again" << endl;
+    // output = intr.next();
+    // cout << "after next" << endl;
+    // cout << output << endl;
+    // cout << "after assign" << endl;
+
+    //       cout << "start again" << endl;
+    // output = intr.next();
+    // cout << "after next" << endl;
+    // cout << output << endl;
+    // cout << "after assign" << endl;
+
+ // }
 }
 
 void runInteractiveTest()

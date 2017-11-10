@@ -13,26 +13,70 @@
 #include "queue.h"
 
 using namespace std;
+// void runScriptedTests();
+// int main()
+// {
+// runScriptedTests();
+//         cout << "k1 :" << endl;
+//   return 0;
+// }
+
+// void runScriptedTests(){
+
+//   ArrayClass<int> ac2(10);
+//    cout << "size: " <<  ac2.capacity()<< endl;
+// } 
 
 // forward function declarations
 void arrayClassTests();
 void stackTests();
 void queueTests();
-
+void arrayClassTests22();
 // program entry
 int main()
 {
-  arrayClassTests();
-  stackTests();
+  //arrayClassTests();
+  //stackTests(); 
   queueTests();
-
+//arrayClassTests22();
   // Windows-specific, remove before distribution
 #ifdef _WIN32
   system("pause");
 #endif
   return 0;
 }
+void arrayClassTests22(){
+  cout << "Entered arrayClassTests..." << endl;
+  ArrayClass<int> ac1;
+    cout << "ac1 size and capacity1: " << ac1.size() << ", " << ac1.capacity() << endl;
+  ac1.insert(0,100);
+    cout << "ac1 size and capacity2: " << ac1.size() << ", " << ac1.capacity() << endl;
+      cout << "ac1 at 0: " << ac1.at(0) << ", " << ac1.capacity() << endl;
+      ac1.insert(1,11);
+        cout << "ac1 at 0: " << ac1.at(1) <<endl;
+           ac1.insert(2,12);
+        cout << "ac1 at 0: " << ac1.at(2) <<endl;
+           ac1.insert(3,13);
+        cout << "ac1 at 3: " << ac1.at(3) <<ac1.size() << ", " << ac1.capacity() <<endl;
+cout<<"start from index 2"<<endl;
+  cout << "Cycling ac1 items to start from index 2..." << endl;
+  ac1.startFrom(2);
+  cout << "ac1 contents: ";
+  for (unsigned int i = 0; i < ac1.size(); i++)
+  {
+    cout << ac1[i] << " ";
+  }
+  cout << endl;
+  ac1.pushBack(14);
+   cout << "ac1 contents: ";
+  for (unsigned int i = 0; i < ac1.size(); i++)
+  {
+    cout << ac1[i] << " ";
+  }
+  cout << endl;
+ cout << "ac1 at 4: " << ac1.at(4) <<"size: "<< ac1.size() << ", " << ac1.capacity() <<endl;
 
+}
 void arrayClassTests()
 {
   cout << "Entered arrayClassTests..." << endl;
@@ -251,6 +295,86 @@ void stackTests()
 
 void queueTests()
 {
+  //   cout << "Entered queueTests..." << endl;
+
+  // Queue<int> q1;
+  // Queue<int> q2;
+
+  // cout << "Queues q1 and q2 created. Enqueueing 3 items to q1, "
+  //   << "then dequeueing 2 items from q1, and enqueueing 5 more items to q1..." << endl;
+  
+  // q1.enqueue(1);
+  // q1.enqueue(2);
+  // q1.enqueue(3);
+  // cout << "Dequeued items: " << q1.dequeue();
+  // cout << ", " << q1.dequeue() << endl;
+  // q1.enqueue(4);
+  // q1.enqueue(5);
+  // q1.enqueue(6);
+  // q1.enqueue(7);
+  // q1.enqueue(8);
+
+  // cout << "Enqueuing 3 items to q2..." << endl;
+  // q2.enqueue(11);
+  // q2.enqueue(12);
+  // q2.enqueue(13);
+
+  // cout << "q1 size: " << q1.size() << endl;
+  // cout << "Dequeuing all q1 contents: ";
+  // while (!q1.isEmpty())
+  // {
+  //   cout << q1.dequeue() << " ";
+  // }
+  // cout << endl;
+
+  // cout << "q2 size: " << q2.size() << endl;
+  // cout << "Front of q2: " << q2.peek() << endl;
+
+  // cout << "Enqueueing 4 items to q1..." << endl;
+  // q1.enqueue(1);
+  // q1.enqueue(2);
+  // q1.enqueue(3);
+  // q1.enqueue(4);
+
+  // cout << "Assigning q1 to q2..." << endl;
+  // q2 = q1;
+
+  // cout << "q2 size: " << q2.size() << endl;
+  // cout << "Front of q2: " << q2.peek() << endl;
+
+  // cout << "Dequeueing 3 items from q2: ";
+  // cout << q2.dequeue() << " ";
+  // cout << q2.dequeue() << " ";
+  // cout << q2.dequeue() << endl;
+
+  // cout << "q1 size: " << q1.size() << endl;
+  // cout << "Front of q1: " << q1.peek() << endl;
+
+  // cout << "q2 size: " << q2.size() << endl;
+  // cout << "Front of q2: " << q2.peek() << endl;
+
+  // Queue<string> q3;
+  // cout << "Queue q3 created. Attempting to call peek, dequeue..." << endl;
+  // try
+  // {
+  //   cout << q3.peek();
+  // }
+  // catch (out_of_range e)
+  // {
+  //   cout << "caught exception - ";
+  //   cout << e.what() << endl;
+  // }
+  // try
+  // {
+  //   cout << q3.dequeue();
+  // }
+  // catch (out_of_range e)
+  // {
+  //   cout << "caught exception - ";
+  //   cout << e.what() << endl;
+  // }
+
+  // cout << "Exiting queueTests...\n" << endl;
   cout << "Entered queueTests..." << endl;
 
   Queue<string> q1;
@@ -269,7 +393,7 @@ void queueTests()
   q1.enqueue("6");
   q1.enqueue("7");
   q1.enqueue("8");
-
+cout<< "q1 peek: "<<q1.peek()<<endl;
   cout << "Enqueuing 3 items to q2..." << endl;
   q2.enqueue("11");
   q2.enqueue("12");
@@ -282,12 +406,13 @@ void queueTests()
     cout << q1.dequeue() << " ";
   }
   cout << endl;
-
+    cout << "q1 new size: " << q1.size() << endl;
   cout << "q2 size: " << q2.size() << endl;
   cout << "Front of q2: " << q2.peek() << endl;
 
   cout << "Enqueueing 4 items to q1..." << endl;
   q1.enqueue("1");
+  cout<< "q1 new peek is : "<<q1.peek()<<endl;
   q1.enqueue("2");
   q1.enqueue("3");
   q1.enqueue("4");
